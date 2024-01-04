@@ -1,47 +1,20 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        String word = sc.next();
-
-
-        word = word.toUpperCase();
-        ArrayList<Character> list = new ArrayList();
-
-        for (int i = 0 ; i < word.length(); i++){
-            list.add(word.charAt(i));
+    public static void main(String args[]) throws IOException {
+        int[] alp = new int[26];
+        int ch = System.in.read();
+        while(true) {
+            if(ch > 96) ch = ch - 32;
+            if(ch < 65) break;
+            alp[ch - 65]++;
+            ch = System.in.read();
         }
-
-        Stream<Character> stream = list.stream();
-        Map<Character, Integer> map = stream.collect(
-                Collectors.toMap(Function.identity(), value -> 1, Integer::sum)
-        );
-
-        int value = Collections.max(map.values());
-
-        int cnt=0;
-        for (Character key : map.keySet()){
-            if (map.get(key).equals(value)){
-                cnt++;
-            }
+        short idx = 0, ans = 0;
+        for(short i = 1; i < 26; i++) {
+            if(alp[idx] < alp[i]) idx = ans = i;
+            else if(alp[idx] == alp[i]) ans = -2;
         }
-        if (cnt == 1){
-            for (Character key : map.keySet()){
-                if (map.get(key).equals(value)){
-                    System.out.println(key);
-                }
-            }
-        }
-        else {
-            System.out.println("?");
-        }
-
+        System.out.print((char)(ans + 65));
     }
 }
