@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,13 +17,12 @@ public class Main {
 
         int cnt = Integer.parseInt(bf.readLine());
         String str = bf.readLine();
-        int a, r;
-        int result = 0;
+        BigInteger result = BigInteger.valueOf(0);
         for (int k = 0; k < cnt; k++) {
-            a = hmap.get(str.charAt(k));
-            r = (int) Math.pow(31, k);
-            result = result + a * r;
+            BigInteger a = BigInteger.valueOf(hmap.get(str.charAt(k)));
+            BigInteger r = BigInteger.valueOf(31).pow(k);
+            result = result.add(a.multiply(r));
         }
-        System.out.println(result);
+        System.out.println(result.mod(BigInteger.valueOf(1234567891)));
     }
 }
